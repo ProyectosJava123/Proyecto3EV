@@ -1,0 +1,240 @@
+package Proyecto3EV;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class BD {
+	private ConexionMYSQL BD =new ConexionMYSQL();
+	
+
+	
+	public boolean InsertarCliente(Cliente c) {
+		boolean control = false;
+		BD.Conectar();
+		
+		String sql = "INSERT INTO cliente (nick, password) values ('"+c.getNick()+"','"+c.getPassword()+"')";
+		
+		try {
+			PreparedStatement pst = BD.Conectar().prepareStatement(sql);
+			int n = pst.executeUpdate();
+			
+			if(n > 0) {
+				control = true;
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return control;
+	}
+	
+	public boolean InsertarAdministrador(Administrador a) {
+		boolean control = false;
+		BD.Conectar();
+		
+		String sql = "INSERT INTO administrador (nick, password) values ('"+a.getNick()+"','"+a.getPassword()+"')";
+		
+		try {
+			PreparedStatement pst = BD.Conectar().prepareStatement(sql);
+			int n = pst.executeUpdate();
+			
+			if(n > 0) {
+				control = true;
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return control;
+	}
+	
+	public boolean InsertarMovil(Movil m) {
+		boolean control = false;
+		BD.Conectar();
+		
+		String sql = "INSERT INTO movil (nombre, marca, stock, precio_salida) values ('"+m.getNombre()+"','"+m.getMarca()+"','"+m.getMarca()+"','"+m.getStock()+"','"+m.getPrecio_salida()+"')";
+		
+		try {
+			PreparedStatement pst = BD.Conectar().prepareStatement(sql);
+			int n = pst.executeUpdate();
+			
+			if(n > 0) {
+				control = true;
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return control;
+	}
+	
+	public boolean AltaInsercion(Administrador a, Movil m) {
+		boolean control = false;
+		BD.Conectar();
+		
+		String sql = "INSERT INTO movil (nombre, marca, stock, precio_salida) values ('"+m.getNombre()+"','"+m.getMarca()+"','"+m.getMarca()+"','"+m.getStock()+"','"+m.getPrecio_salida()+"')";
+		
+		try {
+			PreparedStatement pst = BD.Conectar().prepareStatement(sql);
+			int n = pst.executeUpdate();
+			
+			if(n > 0) {
+				control = true;
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return control;
+	}
+	
+	
+	public boolean BorrarMovil(String nombre) {
+		boolean control = false;
+		BD.Conectar();
+		String sql = "DELETE FROM movil WHERE nombre="+nombre+" ";
+		
+		try {
+			PreparedStatement pst = BD.Conectar().prepareStatement(sql);
+			int n = pst.executeUpdate();
+			
+			if(n > 0) {
+				control = true;
+				System.out.println("Registro eliminado con exito");
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return control;
+	}
+	
+	public boolean ListadoMoviles() {
+		boolean control = false;
+		BD.Conectar();
+		Connection con=BD.Conectar();
+		Statement st;
+		ResultSet rs;
+		String sql = "SELECT * FROM movil";
+		
+		try {
+			st=con.createStatement();
+			rs=st.executeQuery(sql);
+			
+			while(rs.next()) {
+				System.out.println("Móviles");
+				System.out.println(" ");
+				System.out.println("Nombre:"+rs.getString(1));
+				System.out.println("Marca:" +rs.getString(2));
+				System.out.println("Stock:" +rs.getInt(5));
+				System.out.println("Precio Salida:" +rs.getInt(6));
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return control;
+	}
+	
+	public boolean ListadoClientes() {
+		boolean control = false;
+		BD.Conectar();
+		Connection con=BD.Conectar();
+		Statement st;
+		ResultSet rs;
+		String sql = "SELECT * FROM cliente";
+		
+		try {
+			st=con.createStatement();
+			rs=st.executeQuery(sql);
+			
+			while(rs.next()) {
+				System.out.println("Clientes");
+				System.out.println(rs.getString(1));
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return control;
+	}
+	
+	public boolean ListadoAdministradores() {
+		boolean control = false;
+		BD.Conectar();
+		Connection con=BD.Conectar();
+		Statement st;
+		ResultSet rs;
+		String sql = "SELECT * FROM administrador";
+		
+		try {
+			st=con.createStatement();
+			rs=st.executeQuery(sql);
+			
+			while(rs.next()) {
+				System.out.println("Administradores");
+				System.out.println(rs.getString(1));
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return control;
+	}
+	
+	public boolean BorrarCliente(String nick) {
+		boolean control = false;
+		BD.Conectar();
+		String sql = "DELETE FROM cliente WHERE nick="+nick+" ";
+		
+		try {
+			PreparedStatement pst = BD.Conectar().prepareStatement(sql);
+			int n = pst.executeUpdate();
+			
+			if(n > 0) {
+				control = true;
+				System.out.println("Registro eliminado con exito");
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return control;
+	}
+	
+	public boolean BorrarAdministrador(String nick) {
+		boolean control = false;
+		BD.Conectar();
+		
+		String sql = "DELETE FROM administrador WHERE nick='"+nick+"'";
+		
+		try {
+			
+			PreparedStatement pst = BD.Conectar().prepareStatement(sql);
+			
+			int n = pst.executeUpdate();
+			if(n > 0) {
+				control = true;
+				System.out.println("Registro eliminado con exito");
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return control;
+	}
+	
+}
