@@ -33,7 +33,7 @@ public class Gestion_Usuarios {
 		String nick, password;
 		System.out.println("Introduce Nick");
 		nick=teclado.LeerString();
-		System.out.println("Introduce Password");
+		System.out.println("Introduce nueva Password");
 		password=teclado.LeerString();
 		Usuario c = new Cliente(nick, password);
 		BD ss = new BD();
