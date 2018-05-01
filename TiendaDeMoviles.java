@@ -11,7 +11,6 @@ public class TiendaDeMoviles {
 	do {
 		System.out.println("1 - Registrarse");
 		System.out.println("2 - Login");
-		System.out.println("3 - Administracion");
 		opcion=teclado.LeerString();
 		
 			if(opcion.equalsIgnoreCase("1")) { //Apartado del Registro
@@ -25,13 +24,31 @@ public class TiendaDeMoviles {
 					else if(opcion.equalsIgnoreCase("2")) { //Registrar Administrador
 						gu.Pedir_Administrador();
 					}
+					
 			}
 			else if (opcion.equalsIgnoreCase("2")) { //Apartado del Login
-				
+						System.out.println("Loggear Cliente");
+						System.out.println("Loggear Administrador");
+						opcion=teclado.LeerString();
+						
+						if(opcion.equalsIgnoreCase("1")) { //Loggear Cliente
+							while(!gu.LoginCliente()){
+								System.out.println("Cliente existente y/o Contraseña incorrecta");
+							}
+							System.out.println("Loggin realizado con éxito");
+							
+							
+					
+							
+						}
+						else if(opcion.equalsIgnoreCase("2")) { //Loggear administrador
+							while(!gu.LoginAdministrador()){
+								System.out.println("Administrador existente y/o Contraseña incorrecta");
+							}
+							System.out.println("Loggin realizado con éxito");
+						}
 			}
-			else if(opcion.equalsIgnoreCase("3")) {
-				
-			}
+	
 	}
 	while(seguir);
 
