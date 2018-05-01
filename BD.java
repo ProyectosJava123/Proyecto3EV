@@ -9,6 +9,8 @@ import java.sql.Statement;
 public class BD {
 	private ConexionMYSQL BD =new ConexionMYSQL();
 	
+
+	
 	public boolean InsertarCliente(Cliente c) {
 		boolean control = false;
 		BD.Conectar();
@@ -97,7 +99,7 @@ public class BD {
 	public boolean BorrarMovil(String nombre) {
 		boolean control = false;
 		BD.Conectar();
-		String sql = "DELETE FROM movil WHERE nombre='"+nombre+"' ";
+		String sql = "DELETE FROM movil WHERE nombre="+nombre+" ";
 		
 		try {
 			PreparedStatement pst = BD.Conectar().prepareStatement(sql);
@@ -167,52 +169,6 @@ public class BD {
 		return control;
 	}
 	
-	public boolean ValidarAdmin(String nick, String password) {
-		boolean control = false;
-		BD.Conectar();
-		Connection con=BD.Conectar();
-		Statement st;
-		ResultSet rs;
-		String sql = "SELECT * FROM administrador WHERE nick = '"+nick+"' AND password ='"+password+"'";
-		
-		try {
-			st=con.createStatement();
-			rs=st.executeQuery(sql);
-			
-			while(rs.next()) {
-				control=true;
-			}
-			
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		}
-		return control;
-	}
-	
-	public boolean ValidarCliente(String nick, String password) {
-		boolean control = false;
-		BD.Conectar();
-		Connection con=BD.Conectar();
-		Statement st;
-		ResultSet rs;
-		String sql = "SELECT * FROM cliente WHERE nick = '"+nick+"' AND password ='"+password+"'";
-		
-		try {
-			st=con.createStatement();
-			rs=st.executeQuery(sql);
-			
-			while(rs.next()) {
-				control=true;
-			}
-			
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		}
-		return control;
-	}
-	
 	public boolean ListadoAdministradores() {
 		boolean control = false;
 		BD.Conectar();
@@ -240,7 +196,7 @@ public class BD {
 	public boolean BorrarCliente(String nick) {
 		boolean control = false;
 		BD.Conectar();
-		String sql = "DELETE FROM cliente WHERE nick='"+nick+"' ";
+		String sql = "DELETE FROM cliente WHERE nick="+nick+" ";
 		
 		try {
 			PreparedStatement pst = BD.Conectar().prepareStatement(sql);

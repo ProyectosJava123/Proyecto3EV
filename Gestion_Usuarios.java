@@ -50,42 +50,4 @@ public class Gestion_Usuarios {
 		ss.BorrarCliente(nick);
 	}
 	
-	protected boolean LoginAdministrador(){
-		ClaseLectura teclado = new ClaseLectura();
-		String nick, password;
-		System.out.println("Introduce Nick");
-		nick=teclado.LeerString();
-		System.out.println("Introduce password");
-		password=teclado.LeerString();
-		BD ss = new BD();
-		
-		if(!ss.ValidarAdmin(nick, password)){
-			return false;
-		}
-		else return true;
-		
-	}
-	
-	protected boolean LoginCliente(){
-		ClaseLectura teclado = new ClaseLectura();
-		String nick, password;
-		System.out.println("Introduce Nick");
-		nick=teclado.LeerString();
-		System.out.println("Introduce password");
-		password=teclado.LeerString();
-		BD ss = new BD();
-		
-		if(!ss.ValidarCliente(nick, password)){
-			return false;
-		}
-		else return true;
-		
-	}
-	
-	
-		
-	
-	
-	
-	
 }
