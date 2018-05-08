@@ -8,8 +8,10 @@ public class Gestion_Movil {
 	
 	protected void Añadir_Movil() {
 		ClaseLectura teclado = new ClaseLectura();
-		String nombre, marca;
+		String nombre, marca, nick;
 		int stock, precio_salida;
+		System.out.println("Inserta tu nick");
+		nick=teclado.LeerString();
 		System.out.println("Introduce Nombre");
 		nombre=teclado.LeerString();
 		System.out.println("Introduce Marca");
@@ -21,7 +23,7 @@ public class Gestion_Movil {
 		Movil m = new Movil(nombre, marca, stock, precio_salida);
 		BD ss = new BD();
 		
-		ss.InsertarMovil(m);
+		ss.InsertarMovil(m, nick);
 		
 	}
 	

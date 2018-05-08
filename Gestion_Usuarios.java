@@ -8,13 +8,19 @@ public class Gestion_Usuarios {
 	
 	protected void Pedir_Administrador() { //Método para dar de alta a un administrador
 		ClaseLectura teclado = new ClaseLectura();
+		BD ss = new BD();
 		String nick, password;
+		
+		do{
 		System.out.println("Introduce Nick");
 		nick=teclado.LeerString();
-		System.out.println("Introduce Password");
+		}
+		while(ss.ComprobarAdmin(nick));
+		
+		System.out.println("Introduce nueva Password");
 		password=teclado.LeerString();
 		Usuario a = new Administrador(nick, password);
-		BD ss = new BD();
+		
 		ss.InsertarAdministrador((Administrador) a);
 	}
 	
@@ -30,13 +36,19 @@ public class Gestion_Usuarios {
 	
 	protected void Pedir_Cliente() { //Método para dar de alta un Cliente
 		ClaseLectura teclado = new ClaseLectura();
+		BD ss = new BD();
 		String nick, password;
+		
+		do{
 		System.out.println("Introduce Nick");
 		nick=teclado.LeerString();
+		}
+		while(ss.ComprobarCliente(nick));
+		
 		System.out.println("Introduce nueva Password");
 		password=teclado.LeerString();
 		Usuario c = new Cliente(nick, password);
-		BD ss = new BD();
+		
 		ss.InsertarCliente((Cliente) c);
 	}
 	
@@ -81,11 +93,5 @@ public class Gestion_Usuarios {
 		else return true;
 		
 	}
-	
-	
-		
-	
-	
-	
 	
 }

@@ -30,6 +30,56 @@ public class BD {
 		return control;
 	}
 	
+	public boolean ComprobarCliente(String nick) {
+		boolean control = false;
+		BD.Conectar();
+		Connection con=BD.Conectar();
+		Statement st;
+		ResultSet rs;
+		String sql = "SELECT * FROM cliente WHERE nick='"+nick+"'";
+		
+		try {
+			st=con.createStatement();
+			rs=st.executeQuery(sql);
+			
+			while(rs.next()) {
+				control = true;
+				System.out.println("El cliente ya existe");
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return control;
+	}
+	
+	public boolean ComprobarAdmin(String nick) {
+		boolean control = false;
+		BD.Conectar();
+		Connection con=BD.Conectar();
+		Statement st;
+		ResultSet rs;
+		String sql = "SELECT * FROM administrador WHERE nick='"+nick+"'";
+		
+		try {
+			st=con.createStatement();
+			rs=st.executeQuery(sql);
+			
+			while(rs.next()) {
+				control = true;
+				System.out.println(" ");
+				System.out.println("El administrador ya existe");
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return control;
+	}
+	
+	
 	public boolean InsertarAdministrador(Administrador a) {
 		boolean control = false;
 		BD.Conectar();
@@ -51,11 +101,12 @@ public class BD {
 		return control;
 	}
 	
-	public boolean InsertarMovil(Movil m) {
+	public boolean InsertarMovil(Movil m, String nick) {
 		boolean control = false;
 		BD.Conectar();
 		
 		String sql = "INSERT INTO movil (nombre, marca, stock, precio_salida) values ('"+m.getNombre()+"','"+m.getMarca()+"','"+m.getMarca()+"','"+m.getStock()+"','"+m.getPrecio_salida()+"')";
+		
 		
 		try {
 			PreparedStatement pst = BD.Conectar().prepareStatement(sql);
@@ -77,7 +128,6 @@ public class BD {
 		BD.Conectar();
 		
 		String sql = "INSERT INTO movil (nombre, marca, stock, precio_salida) values ('"+m.getNombre()+"','"+m.getMarca()+"','"+m.getMarca()+"','"+m.getStock()+"','"+m.getPrecio_salida()+"')";
-		
 		try {
 			PreparedStatement pst = BD.Conectar().prepareStatement(sql);
 			int n = pst.executeUpdate();
@@ -128,7 +178,6 @@ public class BD {
 			rs=st.executeQuery(sql);
 			
 			while(rs.next()) {
-				System.out.println("Móviles");
 				System.out.println(" ");
 				System.out.println("Nombre:"+rs.getString(1));
 				System.out.println("Marca:" +rs.getString(2));
