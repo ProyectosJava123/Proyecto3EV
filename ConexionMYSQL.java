@@ -15,7 +15,6 @@ public class ConexionMYSQL {
 	try {
 		Class.forName(driver);
 		MiConexion=DriverManager.getConnection(servidor, usuario, pass);
-		System.out.println("Conexión realizada");
 	}
 	catch(Exception e) {
 		

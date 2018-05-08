@@ -13,7 +13,7 @@ public class BD {
 		boolean control = false;
 		BD.Conectar();
 		
-		String sql = "INSERT INTO cliente (nick, password) values ('"+c.getNick()+"','"+c.getPassword()+"')";
+		String sql = "INSERT INTO cliente (nick, password, nombre, apellido, telefono, correo) values ('"+c.getNick()+"','"+c.getPassword()+"','"+c.getPassword()+"','"+c.getNombre()+"','"+c.getApellido()+"','"+c.getApellido()+"','"+c.getCorreo()+"')";
 		
 		try {
 			PreparedStatement pst = BD.Conectar().prepareStatement(sql);
@@ -79,6 +79,31 @@ public class BD {
 		return control;
 	}
 	
+	public boolean ComprobarCorreo(String correo) {
+		boolean control = false;
+		BD.Conectar();
+		Connection con=BD.Conectar();
+		Statement st;
+		ResultSet rs;
+		String sql = "SELECT * FROM cliente WHERE correo='"+correo+"'";
+		
+		try {
+			st=con.createStatement();
+			rs=st.executeQuery(sql);
+			
+			while(rs.next()) {
+				control = true;
+				System.out.println(" ");
+				System.out.println("El correo ya existe");
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return control;
+	}
+	
 	
 	public boolean InsertarAdministrador(Administrador a) {
 		boolean control = false;
@@ -101,33 +126,13 @@ public class BD {
 		return control;
 	}
 	
-	public boolean InsertarMovil(Movil m, String nick) {
+	public boolean InsertarMovil(Movil m) {
 		boolean control = false;
 		BD.Conectar();
 		
 		String sql = "INSERT INTO movil (nombre, marca, stock, precio_salida) values ('"+m.getNombre()+"','"+m.getMarca()+"','"+m.getMarca()+"','"+m.getStock()+"','"+m.getPrecio_salida()+"')";
 		
 		
-		try {
-			PreparedStatement pst = BD.Conectar().prepareStatement(sql);
-			int n = pst.executeUpdate();
-			
-			if(n > 0) {
-				control = true;
-			}
-			
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		}
-		return control;
-	}
-	
-	public boolean AltaInsercion(Administrador a, Movil m) {
-		boolean control = false;
-		BD.Conectar();
-		
-		String sql = "INSERT INTO movil (nombre, marca, stock, precio_salida) values ('"+m.getNombre()+"','"+m.getMarca()+"','"+m.getMarca()+"','"+m.getStock()+"','"+m.getPrecio_salida()+"')";
 		try {
 			PreparedStatement pst = BD.Conectar().prepareStatement(sql);
 			int n = pst.executeUpdate();
@@ -239,13 +244,13 @@ public class BD {
 		return control;
 	}
 	
-	public boolean ValidarCliente(String nick, String password) {
+	public boolean ValidarCliente(String nick, String password, String correo) {
 		boolean control = false;
 		BD.Conectar();
 		Connection con=BD.Conectar();
 		Statement st;
 		ResultSet rs;
-		String sql = "SELECT * FROM cliente WHERE nick = '"+nick+"' AND password ='"+password+"'";
+		String sql = "SELECT * FROM cliente WHERE nick = '"+nick+"' AND password ='"+password+"' AND correo='"+correo+"'";
 		
 		try {
 			st=con.createStatement();
@@ -261,6 +266,7 @@ public class BD {
 		}
 		return control;
 	}
+	
 	
 	public boolean ListadoAdministradores() {
 		boolean control = false;

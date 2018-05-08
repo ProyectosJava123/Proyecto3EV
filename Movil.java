@@ -15,12 +15,8 @@ public class Movil {
 		this.precio_salida=precio_salida;
 	}
 	
-	public Movil(String nombre, String marca, int stock, int precio_salida, int proveedor) {
+	public Movil(String nombre) {
 		this.nombre=nombre;
-		this.marca=marca;
-		this.stock=stock;
-		this.precio_salida=precio_salida;
-		this.proveedor=proveedor;
 	}
 
 	protected int getProveedor() {

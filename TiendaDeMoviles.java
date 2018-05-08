@@ -10,15 +10,19 @@ public class TiendaDeMoviles {
 		String opcion;
 		
 	do {
+		do{
 		System.out.println("1 - Registrarse");
 		System.out.println("2 - Login");
 		System.out.println("3 - Salir");
 		opcion=teclado.LeerString();
+		}while(!opcion.equalsIgnoreCase("1") && !opcion.equalsIgnoreCase("2") && !opcion.equalsIgnoreCase("3"));
 		
 			if(opcion.equalsIgnoreCase("1")) { //Apartado del Registro
+					do{
 					System.out.println("1 - Registrar Cliente");
 					System.out.println("2 - Registrar Administrador");
 					opcion=teclado.LeerString();
+					}while(!opcion.equalsIgnoreCase("1") && !opcion.equalsIgnoreCase("2"));
 					
 					if(opcion.equalsIgnoreCase("1")) { //Registrar Cliente
 						gu.Pedir_Cliente();
@@ -35,30 +39,35 @@ public class TiendaDeMoviles {
 						
 						if(opcion.equalsIgnoreCase("1")) { //Loggear Cliente
 							while(!gu.LoginCliente()){
-								System.out.println("Cliente inexistente y/o Contraseña incorrecta");
+								System.out.println("Error en Loggeo");
 							}
 							System.out.println("Loggin realizado con éxito");
 							System.out.println("¿Qué movil quieres comprar?");
 							ss.ListadoMoviles();
-							
 						}
 						else if(opcion.equalsIgnoreCase("2")) { //Loggear administrador
 							while(!gu.LoginAdministrador()){
 								System.out.println("Administrador inexistente y/o Contraseña incorrecta");
 							}
 							System.out.println("Loggin realizado con éxito");
+							System.out.println(" ");
+							do{
+							System.out.println("Borrar");
+							System.out.println("Modificar");
+							opcion=teclado.LeerString();
+							}while(!opcion.equalsIgnoreCase("1") && !opcion.equalsIgnoreCase("2"));
 							
-							System.out.println("1 - Ver clientes registrados");
-							System.out.println("2 - Ver listado de móviles");
-							System.out.println("3 - Borrar cliente");
-							System.out.println("4 - Borrar Móvil");
-							System.out.println("4 - Ver lis");
-							
-							
+							if(opcion.equalsIgnoreCase("1")){ //Borrar
+								
+							}
+							else if(opcion.equalsIgnoreCase("2")){ //Modificar
+								
+							}
 						}
 			}
 			else if(opcion.equalsIgnoreCase("3")){
 				seguir=false;
+				System.out.println("Fin del programa");
 			}
 	
 	}
