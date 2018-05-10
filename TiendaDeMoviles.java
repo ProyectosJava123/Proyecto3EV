@@ -38,12 +38,7 @@ public class TiendaDeMoviles {
 						opcion=teclado.LeerString();
 						
 						if(opcion.equalsIgnoreCase("1")) { //Loggear Cliente
-							while(!gu.LoginCliente()){
-								System.out.println("Error en Loggeo");
-							}
-							System.out.println("Loggin realizado con éxito");
-							System.out.println("¿Qué movil quieres comprar?");
-							ss.ListadoMoviles();
+							gu.LoginCliente();
 						}
 						else if(opcion.equalsIgnoreCase("2")) { //Loggear administrador
 							while(!gu.LoginAdministrador()){

@@ -6,21 +6,10 @@ public class Gestion_Compra {
 		
 	}
 	
-	protected void ComprarMovil(){
+	protected void ComprarMovil(String nick, String nombre, int precio){
 		BD ss = new BD();
-		ClaseLectura teclado = new ClaseLectura();
-		String nombre, nick;
-		ss.ListadoMoviles();
-		System.out.println("Introduce móvil");
-		nombre=teclado.LeerString();
-		System.out.println("Introduce tu nick");
-		nick=teclado.LeerString();
-		Cliente c = new Cliente(nick);
-		Movil m = new Movil(nombre);
+		ss.ComprarMovil(nick, nombre, precio);
 	}
 	
-	protected void ModificarDatos(){
-		
-	}
 	
 }

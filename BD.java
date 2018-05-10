@@ -1,6 +1,7 @@
 package Proyecto3EV;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,7 +14,8 @@ public class BD {
 		boolean control = false;
 		BD.Conectar();
 		
-		String sql = "INSERT INTO cliente (nick, password, nombre, apellido, telefono, correo) values ('"+c.getNick()+"','"+c.getPassword()+"','"+c.getPassword()+"','"+c.getNombre()+"','"+c.getApellido()+"','"+c.getApellido()+"','"+c.getCorreo()+"')";
+										
+		String sql = "INSERT INTO cliente (nick, password, nombre, apellido, telefono, correo) values ('"+c.getNick()+"','"+c.getPassword()+"','"+c.getNombre()+"','"+c.getApellido()+"','"+c.getTelefono()+"','"+c.getCorreo()+"')";
 		
 		try {
 			PreparedStatement pst = BD.Conectar().prepareStatement(sql);
@@ -30,6 +32,45 @@ public class BD {
 		return control;
 	}
 	
+	public boolean ComprarMovil(String nick, String nombre, int precio) {
+		boolean control = false;
+		BD.Conectar();
+										
+		String sql1 = "SELECT * FROM cliente WHERE cliente.nick = '"+nick+"'";
+		String sql2 = "SELECT * FROM movil WHERE movil.nombre = '"+nombre+"'";
+		
+		
+		try {
+			
+			PreparedStatement pst2 = BD.Conectar().prepareStatement(sql1);
+			PreparedStatement pst3 = BD.Conectar().prepareStatement(sql2);
+			ResultSet rsusuario = pst2.executeQuery();
+			ResultSet rsmovil = pst3.executeQuery();
+			
+			if(rsusuario.next() && rsmovil.next()){
+				
+				int id_cliente = rsusuario.getInt("id_cliente");
+				int id_movil = rsmovil.getInt("id_movil");
+				String sql = "INSERT INTO compra (fk_cliente, fk_movil, fecha_compra, precio_compra) values ("+id_cliente+", "+id_movil+", CURRENT_DATE(),"+precio+")";
+				PreparedStatement pst = BD.Conectar().prepareStatement(sql);
+		
+				int n = pst.executeUpdate();
+			
+				if(n > 0) {
+					control = true;
+				}
+				
+			}
+		
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return control;
+	}
+	
+	
 	public boolean ComprobarCliente(String nick) {
 		boolean control = false;
 		BD.Conectar();
@@ -44,7 +85,6 @@ public class BD {
 			
 			while(rs.next()) {
 				control = true;
-				System.out.println("El cliente ya existe");
 			}
 			
 		} catch (SQLException e) {
@@ -132,7 +172,6 @@ public class BD {
 		
 		String sql = "INSERT INTO movil (nombre, marca, stock, precio_salida) values ('"+m.getNombre()+"','"+m.getMarca()+"','"+m.getMarca()+"','"+m.getStock()+"','"+m.getPrecio_salida()+"')";
 		
-		
 		try {
 			PreparedStatement pst = BD.Conectar().prepareStatement(sql);
 			int n = pst.executeUpdate();
@@ -185,7 +224,6 @@ public class BD {
 			while(rs.next()) {
 				System.out.println(" ");
 				System.out.println("Nombre:"+rs.getString(1));
-				System.out.println("Marca:" +rs.getString(2));
 				System.out.println("Stock:" +rs.getInt(5));
 				System.out.println("Precio Salida:" +rs.getInt(6));
 			}
@@ -210,7 +248,7 @@ public class BD {
 			rs=st.executeQuery(sql);
 			
 			while(rs.next()) {
-				System.out.println("Clientes");
+				System.out.println("Clientes:");
 				System.out.println(rs.getString(1));
 			}
 			
