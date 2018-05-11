@@ -83,6 +83,30 @@ public class Gestion_Usuarios {
 				precio=teclado.LeerInt();
 				
 				gc.ComprarMovil(c.getNick(), opcion, precio);
+			} else if(opcion.equalsIgnoreCase("2")){
+				do{
+				System.out.println("¿Qué dato quieres modificar?");
+				System.out.println("1 - Nombre");
+				System.out.println("2 - Apellido");
+				System.out.println("3 - Nick");
+				System.out.println("4 - Correo");
+				System.out.println("5 - Teléfono");
+				opcion=teclado.LeerString();
+				}while(!opcion.equalsIgnoreCase("1") && !opcion.equalsIgnoreCase("2") || !opcion.equalsIgnoreCase("3") || !opcion.equalsIgnoreCase("4") || !opcion.equalsIgnoreCase("5"));
+				if(opcion.equalsIgnoreCase("1")){
+					System.out.println("Introduce Nombre");
+					
+				}else if(opcion.equalsIgnoreCase("2")){
+					System.out.println("Introduce Apellido");
+					
+				} else if(opcion.equalsIgnoreCase("3")){
+					System.out.println("Introduce Nick");
+				} else if(opcion.equalsIgnoreCase("4")){
+					System.out.println("Introduce Correo");
+				} else if(opcion.equalsIgnoreCase("5")){
+					System.out.println("Introduce Telefono");
+				}
+			
 			}
 		
 	}

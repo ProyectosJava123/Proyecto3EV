@@ -396,4 +396,26 @@ public class BD {
 		return control;
 	}
 	
+	public boolean ModificarNombreMovil(String movilcambiar, String movilexistente) {
+		boolean control = false;
+		BD.Conectar();
+									
+		String sql = "UPDATE movil SET nombre = '"+movilcambiar+"' WHERE movil= '"+movilexistente+"' )";
+		
+		try {
+			PreparedStatement pst = BD.Conectar().prepareStatement(sql);
+			int n = pst.executeUpdate();
+			
+			if(n > 0) {
+				control = true;
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return control;
+	}
+
+	
 }

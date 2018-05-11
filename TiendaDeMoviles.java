@@ -11,7 +11,7 @@ public class TiendaDeMoviles {
 		ClaseLectura teclado = new ClaseLectura();
 		BD ss = new BD();
 		String opcion;
-	
+		
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
@@ -22,8 +22,8 @@ public class TiendaDeMoviles {
 					}
 				}
 			});
-			/*
 
+			/*
 	do {
 		do{
 		System.out.println("1 - Registrarse");

@@ -44,14 +44,14 @@ public class EntornoGrafico {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
+		JPanel logincliente = new JPanel();
+		logincliente.setVisible(false);
+		
 		JPanel registrocliente = new JPanel();
 		registrocliente.setVisible(false);
 		
 		JPanel registroadmin = new JPanel();
 		registroadmin.setVisible(false);
-		
-		JPanel logincliente = new JPanel();
-		logincliente.setVisible(false);
 		
 		JPanel index = new JPanel();
 		index.setBounds(0, 0, 463, 377);
@@ -95,89 +95,17 @@ public class EntornoGrafico {
 		btnLoggearAdministrador.setBounds(227, 231, 227, 92);
 		index.add(btnLoggearAdministrador);
 		
-		JLabel lblNewLabel_4 = new JLabel("Registro/Login");
+		JLabel lblNewLabel_4 = new JLabel("Registro/Inicio");
 		lblNewLabel_4.setFont(new Font("Times New Roman", Font.PLAIN, 41));
 		lblNewLabel_4.setForeground(Color.WHITE);
 		lblNewLabel_4.setBounds(86, 11, 326, 51);
 		index.add(lblNewLabel_4);
 		
 		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Leon\\Pictures\\sunset_and_space_by_qauz-d6hwooq.jpg"));
 		lblNewLabel.setBounds(0, 0, 461, 378);
 		index.add(lblNewLabel);
-		logincliente.setBounds(0, 0, 463, 377);
-		frame.getContentPane().add(logincliente);
-		logincliente.setLayout(null);
-		
-		JLabel lblCorreo_1 = new JLabel("Correo");
-		lblCorreo_1.setForeground(Color.WHITE);
-		lblCorreo_1.setFont(new Font("Times New Roman", Font.PLAIN, 37));
-		lblCorreo_1.setBounds(42, 161, 120, 64);
-		logincliente.add(lblCorreo_1);
-		
-		JLabel label_1 = new JLabel("Password");
-		label_1.setForeground(Color.WHITE);
-		label_1.setFont(new Font("Times New Roman", Font.PLAIN, 37));
-		label_1.setBounds(46, 93, 161, 57);
-		logincliente.add(label_1);
-		
-		JLabel label = new JLabel("Nick");
-		label.setForeground(Color.WHITE);
-		label.setFont(new Font("Times New Roman", Font.PLAIN, 37));
-		label.setBounds(46, 11, 114, 71);
-		logincliente.add(label);
-		
-		JLabel mensajes3 = new JLabel("");
-		mensajes3.setBounds(229, 223, 212, 88);
-		logincliente.add(mensajes3);
-		mensajes3.setForeground(Color.WHITE);
-		mensajes3.setFont(new Font("Times New Roman", Font.PLAIN, 37));
-		
-		clog_nick = new JTextField();
-		clog_nick.setText((String) null);
-		clog_nick.setColumns(10);
-		clog_nick.setBounds(263, 24, 190, 51);
-		logincliente.add(clog_nick);
-		
-		clog_password = new JTextField();
-		clog_password.setText((String) null);
-		clog_password.setColumns(10);
-		clog_password.setBounds(263, 99, 190, 51);
-		logincliente.add(clog_password);
-		
-		clog_correo = new JTextField();
-		clog_correo.setText((String) null);
-		clog_correo.setColumns(10);
-		clog_correo.setBounds(263, 177, 190, 51);
-		logincliente.add(clog_correo);
-		
-		JButton btnNewButton_3 = new JButton("Entrar");
-		btnNewButton_3.addActionListener(new ActionListener() { //LOGIN  CLIENTE
-			public void actionPerformed(ActionEvent e) {
-				Gestion_Usuarios gu = new Gestion_Usuarios();
-				BD ss = new BD(); 
-				
-				if(clog_nick.getText().isEmpty() || clog_password.getText().isEmpty() || clog_correo.getText().isEmpty()){
-					mensajes3.setText("Campos Vacíos");
-				}else if(!ss.ValidarCliente(clog_nick.getText(), clog_password.getText(), clog_correo.getText())){
-					mensajes3.setText("Datos Incorrectos");
-				}else{ gu.LoginCliente(clog_nick.getText(), clog_password.getText(), clog_correo.getText());  
-					
-				logincliente.setVisible(false);
-				index.setVisible(true);
-				
-				}
-	
-			}
-		});
-		btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 21));
-		btnNewButton_3.setBounds(42, 267, 134, 71);
-		logincliente.add(btnNewButton_3);
-		
-		JLabel lblNewLabel_3 = new JLabel("Fondo");
-		lblNewLabel_3.setIcon(new ImageIcon("C:\\Users\\Leon\\Pictures\\sunset_and_space_by_qauz-d6hwooq.jpg"));
-		lblNewLabel_3.setBounds(0, 0, 463, 377);
-		logincliente.add(lblNewLabel_3);
 		registroadmin.setBounds(0, 0, 463, 377);
 		frame.getContentPane().add(registroadmin);
 		registroadmin.setLayout(null);
@@ -313,7 +241,7 @@ public class EntornoGrafico {
 		c_telefono.setText(null);
 		
 		JLabel mensajes = new JLabel("");
-		mensajes.setFont(new Font("Times New Roman", Font.PLAIN, 19));
+		mensajes.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		mensajes.setForeground(Color.WHITE);
 		mensajes.setBounds(253, 301, 200, 51);
 		
@@ -345,6 +273,79 @@ public class EntornoGrafico {
 		u_correo.setIcon(new ImageIcon("C:\\Users\\Leon\\Pictures\\sunset_and_space_by_qauz-d6hwooq.jpg"));
 		u_correo.setBounds(0, 0, 463, 378);
 		registrocliente.add(u_correo);
+		logincliente.setBounds(0, 0, 463, 377);
+		frame.getContentPane().add(logincliente);
+		logincliente.setLayout(null);
+		
+		JLabel lblCorreo_1 = new JLabel("Correo");
+		lblCorreo_1.setForeground(Color.WHITE);
+		lblCorreo_1.setFont(new Font("Times New Roman", Font.PLAIN, 37));
+		lblCorreo_1.setBounds(42, 161, 120, 64);
+		logincliente.add(lblCorreo_1);
+		
+		JLabel label_1 = new JLabel("Password");
+		label_1.setForeground(Color.WHITE);
+		label_1.setFont(new Font("Times New Roman", Font.PLAIN, 37));
+		label_1.setBounds(46, 93, 161, 57);
+		logincliente.add(label_1);
+		
+		JLabel label = new JLabel("Nick");
+		label.setForeground(Color.WHITE);
+		label.setFont(new Font("Times New Roman", Font.PLAIN, 37));
+		label.setBounds(46, 11, 114, 71);
+		logincliente.add(label);
+		
+		JLabel mensajes3 = new JLabel("");
+		mensajes3.setBounds(229, 223, 212, 88);
+		logincliente.add(mensajes3);
+		mensajes3.setForeground(Color.WHITE);
+		mensajes3.setFont(new Font("Times New Roman", Font.PLAIN, 17));
+		
+		clog_nick = new JTextField();
+		clog_nick.setText((String) null);
+		clog_nick.setColumns(10);
+		clog_nick.setBounds(263, 24, 190, 51);
+		logincliente.add(clog_nick);
+		
+		clog_password = new JTextField();
+		clog_password.setText((String) null);
+		clog_password.setColumns(10);
+		clog_password.setBounds(263, 99, 190, 51);
+		logincliente.add(clog_password);
+		
+		clog_correo = new JTextField();
+		clog_correo.setText((String) null);
+		clog_correo.setColumns(10);
+		clog_correo.setBounds(263, 177, 190, 51);
+		logincliente.add(clog_correo);
+		
+		JButton btnNewButton_3 = new JButton("Entrar");
+		btnNewButton_3.addActionListener(new ActionListener() { //LOGIN  CLIENTE
+			public void actionPerformed(ActionEvent e) {
+				Gestion_Usuarios gu = new Gestion_Usuarios();
+				BD ss = new BD(); 
+				
+				if(clog_nick.getText().isEmpty() || clog_password.getText().isEmpty() || clog_correo.getText().isEmpty()){
+					mensajes3.setText("Campos Vacíos");
+				}else if(!ss.ValidarCliente(clog_nick.getText(), clog_password.getText(), clog_correo.getText())){
+					mensajes3.setText("Datos Incorrectos");
+				}else{ gu.LoginCliente(clog_nick.getText(), clog_password.getText(), clog_correo.getText());  
+					
+				logincliente.setVisible(false);
+				index.setVisible(true);
+				
+				}
+	
+			}
+		});
+		btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 21));
+		btnNewButton_3.setBounds(42, 267, 134, 71);
+		logincliente.add(btnNewButton_3);
+		
+		JLabel lblNewLabel_3 = new JLabel("Fondo");
+		lblNewLabel_3.setIcon(new ImageIcon("C:\\Users\\Leon\\Pictures\\sunset_and_space_by_qauz-d6hwooq.jpg"));
+		lblNewLabel_3.setBounds(0, 0, 463, 377);
+		logincliente.add(lblNewLabel_3);
 		
 		JPanel loginadmin = new JPanel();
 		loginadmin.setVisible(false);
