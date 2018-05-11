@@ -6,19 +6,9 @@ public class Gestion_Usuarios {
 		
 	}
 	
-	protected void Pedir_Administrador() { //Método para dar de alta a un administrador
-		ClaseLectura teclado = new ClaseLectura();
+	protected void Pedir_Administrador(String nick, String password) { //Método para dar de alta a un administrador
 		BD ss = new BD();
-		String nick, password;
-		
-		do{
-		System.out.println("Introduce Nick");
-		nick=teclado.LeerString();
-		}
-		while(ss.ComprobarAdmin(nick));
-		
-		System.out.println("Introduce nueva Password");
-		password=teclado.LeerString();
+	
 		Usuario a = new Administrador(nick, password);
 		
 		ss.InsertarAdministrador((Administrador) a);
@@ -34,36 +24,9 @@ public class Gestion_Usuarios {
 		ss.BorrarAdministrador(nick);
 	}
 	
-	protected void Pedir_Cliente() { //Método para dar de alta un Cliente
-		ClaseLectura teclado = new ClaseLectura();
-		Gestion_Compra gc = new Gestion_Compra();
+	protected void Pedir_Cliente(String nick, String password, String nombre, String apellido, String telefono, String correo) { //Método para dar de alta un Cliente
+		Usuario c = new Cliente(nick, password, nombre, apellido, telefono, correo);	
 		BD ss = new BD();
-		String nick, password, nombre, telefono, correo, apellido, opcion, movil;
-		
-		do{
-			System.out.println("Introduce Nick");
-			nick=teclado.LeerString();
-			}
-			while(ss.ComprobarCliente(nick));
-		
-		System.out.println("Introduce nueva Password");
-		password=teclado.LeerString();
-		
-		System.out.println("Introduce nombre");
-		nombre=teclado.LeerString();
-		System.out.println("Introduce apellido");
-		apellido=teclado.LeerString();
-		System.out.println("Introduce telefono");
-		telefono=teclado.LeerString();
-		
-		do{
-		System.out.println("Introduce correo");
-		correo=teclado.LeerString();
-		}while(ss.ComprobarCorreo(correo));
-		
-		
-		Usuario c = new Cliente(nick, password, nombre, apellido, telefono, correo);
-		
 		ss.InsertarCliente((Cliente) c);
 		
 	}
@@ -90,41 +53,38 @@ public class Gestion_Usuarios {
 			System.out.println("Error");
 		}
 		
-		
 	}
 	
-	protected void LoginCliente(){
-		ClaseLectura teclado = new ClaseLectura();
-		String nick, password, correo, opcion, movil;
-		BD ss = new BD();
-		Gestion_Compra gc = new Gestion_Compra();
-		do{
-		System.out.println("Introduce correo");
-		correo=teclado.LeerString();
-		System.out.println("Introduce Nick");
-		nick=teclado.LeerString();
-		System.out.println("Introduce password");
-		password=teclado.LeerString();
-		if(!ss.ValidarCliente(nick, password, correo)){
-			System.out.println("Error");
-		} 
-		}while(!ss.ValidarCliente(nick, password, correo));
-		Usuario c = new Cliente(nick, password, correo);
-		do{
-		System.out.println("1 - Comprar Movil");
-		System.out.println("2 - Editar datos");
-		opcion=teclado.LeerString();
-		}while(!opcion.equalsIgnoreCase("1") && !opcion.equalsIgnoreCase("2"));
-		
-		if(opcion.equalsIgnoreCase("1")){
-			ss.ListadoMoviles();
-			System.out.println("Elige movil");
-			movil=teclado.LeerString();
-			System.out.println("Inserta Precio_Compra");
-			int precio=teclado.LeerInt();
-			gc.ComprarMovil(c.getNick(), movil, precio);
+	protected void LoginCliente(String nick, String password, String correo){
+			ClaseLectura teclado = new ClaseLectura();
+			BD ss = new BD();
+			Gestion_Compra gc = new Gestion_Compra();
+			int precio;
+		String opcion;
+			Usuario c = new Cliente(nick, password, correo);
+			do{
+				System.out.println("1 - Comprar Móvil");
+				System.out.println("2 - Modificar Datos");
+				opcion=teclado.LeerString();
+				}while(!opcion.equalsIgnoreCase("1") && !opcion.equalsIgnoreCase("2"));
 			
-		} 
+			if(opcion.equalsIgnoreCase("1")){
+				ss.ListadoMoviles();
+				do{
+					System.out.println("Introduce nombre del Movil");
+					opcion=teclado.LeerString();
+					if(!ss.ComprobarMovil(opcion)){
+						System.out.println(" ");
+						System.out.println("Movil inexistente");
+					}
+				}
+				while(!ss.ComprobarMovil(opcion));
+				System.out.println("Introduce precio de compra");
+				precio=teclado.LeerInt();
+				
+				gc.ComprarMovil(c.getNick(), opcion, precio);
+			}
+		
 	}
 	
 }

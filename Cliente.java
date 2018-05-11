@@ -1,7 +1,7 @@
 package Proyecto3EV;
 
 public class Cliente extends Usuario{
-	String nombre, apellido, telefono, correo;
+	private String nombre, apellido, telefono, correo;
 	public Cliente(String nick, String password, String nombre, String apellido, String telefono, String correo){
 		super(nick, password);
 		this.nombre = nombre;

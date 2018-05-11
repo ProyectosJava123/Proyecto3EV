@@ -39,7 +39,6 @@ public class BD {
 		String sql1 = "SELECT * FROM cliente WHERE cliente.nick = '"+nick+"'";
 		String sql2 = "SELECT * FROM movil WHERE movil.nombre = '"+nombre+"'";
 		
-		
 		try {
 			
 			PreparedStatement pst2 = BD.Conectar().prepareStatement(sql1);

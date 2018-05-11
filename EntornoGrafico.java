@@ -60,7 +60,7 @@ public class EntornoGrafico {
 		
 		JButton btnRegistrarAdministrador = new JButton("Registrar Admin");
 		btnRegistrarAdministrador.setFont(new Font("Stencil", Font.PLAIN, 17));
-		btnRegistrarAdministrador.setBounds(10, 149, 207, 92);
+		btnRegistrarAdministrador.setBounds(10, 231, 207, 92);
 		index.add(btnRegistrarAdministrador);
 		
 		JButton btnNewButton = new JButton("Registrar Cliente");
@@ -71,7 +71,7 @@ public class EntornoGrafico {
 			}
 		});
 		btnNewButton.setFont(new Font("Stencil", Font.PLAIN, 17));
-		btnNewButton.setBounds(10, 23, 205, 92);
+		btnNewButton.setBounds(10, 94, 205, 92);
 		index.add(btnNewButton);
 		
 		JButton btnLoggearCliente = new JButton("Loggear Cliente");
@@ -82,7 +82,7 @@ public class EntornoGrafico {
 			}
 		});
 		btnLoggearCliente.setFont(new Font("Stencil", Font.PLAIN, 17));
-		btnLoggearCliente.setBounds(225, 23, 228, 92);
+		btnLoggearCliente.setBounds(226, 94, 228, 92);
 		index.add(btnLoggearCliente);
 		
 		JButton btnLoggearAdministrador = new JButton("Loggear Admin"); //Loggear Admin
@@ -92,13 +92,14 @@ public class EntornoGrafico {
 			}
 		});
 		btnLoggearAdministrador.setFont(new Font("Stencil", Font.PLAIN, 17));
-		btnLoggearAdministrador.setBounds(226, 149, 227, 92);
+		btnLoggearAdministrador.setBounds(227, 231, 227, 92);
 		index.add(btnLoggearAdministrador);
 		
-		JButton btnAdministracion = new JButton("Administracion");
-		btnAdministracion.setFont(new Font("Stencil", Font.PLAIN, 17));
-		btnAdministracion.setBounds(127, 274, 207, 92);
-		index.add(btnAdministracion);
+		JLabel lblNewLabel_4 = new JLabel("Registro/Login");
+		lblNewLabel_4.setFont(new Font("Times New Roman", Font.PLAIN, 41));
+		lblNewLabel_4.setForeground(Color.WHITE);
+		lblNewLabel_4.setBounds(86, 11, 326, 51);
+		index.add(lblNewLabel_4);
 		
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Leon\\Pictures\\sunset_and_space_by_qauz-d6hwooq.jpg"));
@@ -153,46 +154,20 @@ public class EntornoGrafico {
 		JButton btnNewButton_3 = new JButton("Entrar");
 		btnNewButton_3.addActionListener(new ActionListener() { //LOGIN  CLIENTE
 			public void actionPerformed(ActionEvent e) {
-				ClaseLectura teclado = new ClaseLectura();
-				Gestion_Compra gc = new Gestion_Compra();
-				BD ss = new BD(); String opcion; int precio;
+				Gestion_Usuarios gu = new Gestion_Usuarios();
+				BD ss = new BD(); 
 				
 				if(clog_nick.getText().isEmpty() || clog_password.getText().isEmpty() || clog_correo.getText().isEmpty()){
 					mensajes3.setText("Campos Vacíos");
 				}else if(!ss.ValidarCliente(clog_nick.getText(), clog_password.getText(), clog_correo.getText())){
 					mensajes3.setText("Datos Incorrectos");
-				}else{ Usuario c = new Cliente(clog_nick.getText(), clog_password.getText(), clog_correo.getText());  
+				}else{ gu.LoginCliente(clog_nick.getText(), clog_password.getText(), clog_correo.getText());  
 					
 				logincliente.setVisible(false);
 				index.setVisible(true);
 				
-				do{
-				System.out.println("1 - Comprar Móvil");
-				System.out.println("2 - Modificar Datos");
-				opcion=teclado.LeerString();
-				}while(!opcion.equalsIgnoreCase("1") && !opcion.equalsIgnoreCase("2"));
-				
-				if(opcion.equalsIgnoreCase("1")){
-					ss.ListadoMoviles();
-					do{
-						System.out.println("Introduce nombre del Movil");
-						opcion=teclado.LeerString();
-						if(!ss.ComprobarMovil(opcion)){
-							System.out.println(" ");
-							System.out.println("Movil inexistente");
-						}
-					}
-					while(!ss.ComprobarMovil(opcion));
-					System.out.println("Introduce precio de compra");
-					precio=teclado.LeerInt();
-					
-					gc.ComprarMovil(c.getNick(), opcion, precio);
-					
 				}
-				
-				
-				}
-				 
+	
 			}
 		});
 		btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 21));
@@ -241,14 +216,14 @@ public class EntornoGrafico {
 		btnNewButton_2.addActionListener(new ActionListener() { // REGISTRO ADMINISTRADOR
 			public void actionPerformed(ActionEvent e) {
 				BD ss = new BD();
+				Gestion_Usuarios gu = new Gestion_Usuarios();
 				if(a_nick.getText().isEmpty() || a_password.getText().isEmpty()){
 					mensajes2.setText("Campos Vacíos");
 				} else if(ss.ComprobarAdmin(a_nick.getText())){
 					System.out.println("Nick existente");
-				}else {  Usuario a = new Administrador(a_nick.getText(), a_password.getText()); 
-				ss.InsertarAdministrador((Administrador) a);
+				}else { gu.Pedir_Administrador(a_nick.getText(), a_password.getText());
 					registroadmin.setVisible(false);
-					//index.setVisible(true);
+					index.setVisible(true);
 				}
 				
 			}
@@ -347,13 +322,13 @@ public class EntornoGrafico {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) { // REGISTRO DEL CLIENTE
 				BD ss = new BD();
+				Gestion_Usuarios gu = new Gestion_Usuarios();
 				if(c_nick.getText().isEmpty() || c_password.getText().isEmpty() || c_correo.getText().isEmpty()
 		|| c_nombre.getText().isEmpty() || c_apellido.getText().isEmpty() || c_telefono.getText().isEmpty()){
 					mensajes.setText("Campos Vacíos");
 				} else if(ss.ComprobarCliente(c_nick.getText()) || ss.ComprobarCorreo(c_correo.getText())){
 					mensajes.setText("Nick o Correo existentes");
-				}else {  Usuario  c = new Cliente(c_nick.getText(),c_password.getText(),c_nombre.getText(),c_apellido.getText(), c_telefono.getText(), c_correo.getText()); 
-					ss.InsertarCliente((Cliente) c);
+				}else {  gu.Pedir_Cliente(c_nick.getText(), c_password.getText(), c_nombre.getText(), c_apellido.getText(), c_telefono.getText(), c_correo.getText());
 					registrocliente.setVisible(false);
 					index.setVisible(true);
 				}
