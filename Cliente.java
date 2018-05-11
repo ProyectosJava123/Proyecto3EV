@@ -10,6 +10,11 @@ public class Cliente extends Usuario{
 		this.correo = correo;
 	}
 	
+	public Cliente (String nick, String password, String correo){
+		super(nick, password);
+		this.correo=correo;
+	}
+	
 	public Cliente(String nick){
 		super(nick);
 	}

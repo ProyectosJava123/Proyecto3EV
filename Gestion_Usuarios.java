@@ -78,19 +78,18 @@ public class Gestion_Usuarios {
 		ss.BorrarCliente(nick);
 	}
 	
-	protected boolean LoginAdministrador(){
+	protected void LoginAdministrador(){
 		ClaseLectura teclado = new ClaseLectura();
-		String nick, password;
 		System.out.println("Introduce Nick");
-		nick=teclado.LeerString();
+		String nick=teclado.LeerString();
 		System.out.println("Introduce password");
-		password=teclado.LeerString();
+		String password=teclado.LeerString();
 		BD ss = new BD();
 		
 		if(!ss.ValidarAdmin(nick, password)){
-			return false;
+			System.out.println("Error");
 		}
-		else return true;
+		
 		
 	}
 	
@@ -108,10 +107,9 @@ public class Gestion_Usuarios {
 		password=teclado.LeerString();
 		if(!ss.ValidarCliente(nick, password, correo)){
 			System.out.println("Error");
-		}
-		
+		} 
 		}while(!ss.ValidarCliente(nick, password, correo));
-			
+		Usuario c = new Cliente(nick, password, correo);
 		do{
 		System.out.println("1 - Comprar Movil");
 		System.out.println("2 - Editar datos");
@@ -124,12 +122,9 @@ public class Gestion_Usuarios {
 			movil=teclado.LeerString();
 			System.out.println("Inserta Precio_Compra");
 			int precio=teclado.LeerInt();
-			gc.ComprarMovil(nick, movil, precio);
+			gc.ComprarMovil(c.getNick(), movil, precio);
 			
 		} 
-		
-		
-		
 	}
 	
 }

@@ -1,5 +1,8 @@
 package Proyecto3EV;
 
+import java.awt.EventQueue;
+
+
 public class TiendaDeMoviles {
 
 	public static void main(String[] args) {
@@ -8,7 +11,19 @@ public class TiendaDeMoviles {
 		ClaseLectura teclado = new ClaseLectura();
 		BD ss = new BD();
 		String opcion;
-		
+	
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						EntornoGrafico window = new EntornoGrafico();
+						window.frame.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+			/*
+
 	do {
 		do{
 		System.out.println("1 - Registrarse");
@@ -41,9 +56,9 @@ public class TiendaDeMoviles {
 							gu.LoginCliente();
 						}
 						else if(opcion.equalsIgnoreCase("2")) { //Loggear administrador
-							while(!gu.LoginAdministrador()){
+							/* while(!gu.LoginAdministrador()){
 								System.out.println("Administrador inexistente y/o Contraseña incorrecta");
-							}
+							} 
 							System.out.println("Loggin realizado con éxito");
 							System.out.println(" ");
 							do{
@@ -63,11 +78,10 @@ public class TiendaDeMoviles {
 			else if(opcion.equalsIgnoreCase("3")){
 				seguir=false;
 				System.out.println("Fin del programa");
-			}
+			} 
 	
 	}
-	while(seguir);
-
+	while(seguir); */
 	}
 
 }

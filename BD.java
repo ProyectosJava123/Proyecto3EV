@@ -144,6 +144,29 @@ public class BD {
 		return control;
 	}
 	
+	public boolean ComprobarMovil(String movil) {
+		boolean control = false;
+		BD.Conectar();
+		Connection con=BD.Conectar();
+		Statement st;
+		ResultSet rs;
+		String sql = "SELECT * FROM movil WHERE nombre='"+movil+"'";
+		
+		try {
+			st=con.createStatement();
+			rs=st.executeQuery(sql);
+			
+			while(rs.next()) {
+				control = true;
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return control;
+	}
+	
 	
 	public boolean InsertarAdministrador(Administrador a) {
 		boolean control = false;
