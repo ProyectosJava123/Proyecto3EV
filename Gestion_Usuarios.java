@@ -55,7 +55,7 @@ public class Gestion_Usuarios {
 		
 	}
 	
-	protected void LoginCliente(String nick, String password, String correo){
+	/*protected void LoginCliente(String nick, String password, String correo){
 			ClaseLectura teclado = new ClaseLectura();
 			BD ss = new BD();
 			Gestion_Compra gc = new Gestion_Compra();
@@ -92,9 +92,17 @@ public class Gestion_Usuarios {
 				System.out.println("4 - Correo");
 				System.out.println("5 - Teléfono");
 				opcion=teclado.LeerString();
-				}while(!opcion.equalsIgnoreCase("1") && !opcion.equalsIgnoreCase("2") || !opcion.equalsIgnoreCase("3") || !opcion.equalsIgnoreCase("4") || !opcion.equalsIgnoreCase("5"));
+				}while(!opcion.equalsIgnoreCase("1") && !opcion.equalsIgnoreCase("2") && !opcion.equalsIgnoreCase("3") && !opcion.equalsIgnoreCase("4") && !opcion.equalsIgnoreCase("5"));
 				if(opcion.equalsIgnoreCase("1")){
-					System.out.println("Introduce Nombre");
+					ss.DatosDelCliente(c.getNick());
+					System.out.println(" ");
+					do{
+					System.out.println("Introduce nuevo Nombre");
+					opcion=teclado.LeerString();
+					}while(ss.ComprobarCliente(opcion));
+					
+						ss.ModificarNombreCliente(c.getNick(), opcion);
+						ss.DatosDelCliente(c.getNick());
 					
 				}else if(opcion.equalsIgnoreCase("2")){
 					System.out.println("Introduce Apellido");
@@ -110,5 +118,6 @@ public class Gestion_Usuarios {
 			}
 		
 	}
+	*/
 	
 }

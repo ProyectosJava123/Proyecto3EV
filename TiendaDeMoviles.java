@@ -12,6 +12,7 @@ public class TiendaDeMoviles {
 		BD ss = new BD();
 		String opcion;
 		
+		
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {

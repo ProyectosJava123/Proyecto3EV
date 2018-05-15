@@ -15,6 +15,12 @@ public class Movil {
 		this.precio_salida=precio_salida;
 	}
 	
+	public Movil(String nombre, String marca, int precio_salida) {
+		this.nombre=nombre;
+		this.marca=marca;
+		this.precio_salida=precio_salida;
+	}
+	
 	public Movil(String nombre) {
 		this.nombre=nombre;
 	}
