@@ -34,35 +34,39 @@ public class BD {
 		return control;
 	}
 	
-	public boolean ComprarMovil(String nick, String nombre, int precio) {
+	public boolean ComprarMovil(String nick, String nombre) {
 		boolean control = false;
 		BD.Conectar();
 										
 		String sql1 = "SELECT * FROM cliente WHERE cliente.nick = '"+nick+"'";
 		String sql2 = "SELECT * FROM movil WHERE movil.nombre = '"+nombre+"'";
 		String sql3 = "SELECT movil.precio_salida FROM movil WHERE movil.nombre='"+nombre+"'";
+		String sql4 = "UPDATE movil set stock = stock-1 WHERE movil.nombre='"+nombre+"'";
 		
 		try {
 			
 			PreparedStatement pst2 = BD.Conectar().prepareStatement(sql1);
 			PreparedStatement pst3 = BD.Conectar().prepareStatement(sql2);
 			PreparedStatement pst4 = BD.Conectar().prepareStatement(sql3);
+			
 			ResultSet rsusuario = pst2.executeQuery();
 			ResultSet rsmovil = pst3.executeQuery();
 			ResultSet rsprecio = pst4.executeQuery();
 			
-			
-			if(rsusuario.next() && rsmovil.next()){
+			if(rsusuario.next() && rsmovil.next() && rsprecio.next()){
 				
 				int id_cliente = rsusuario.getInt("id_cliente");
 				int id_movil = rsmovil.getInt("id_movil");
 				int preciomovil = rsprecio.getInt("precio_salida");
 				String sql = "INSERT INTO compra (fk_cliente, fk_movil, fecha_compra, precio_compra) values ("+id_cliente+", "+id_movil+", CURRENT_DATE(),"+preciomovil+")";
 				PreparedStatement pst = BD.Conectar().prepareStatement(sql);
+				PreparedStatement pst5 = BD.Conectar().prepareStatement(sql4);
+				
 		
 				int n = pst.executeUpdate();
+				int x = pst5.executeUpdate();
 			
-				if(n > 0) {
+				if(n > 0 && x > 0) {
 					control = true;
 				}
 				
@@ -113,8 +117,6 @@ public class BD {
 			
 			while(rs.next()) {
 				control = true;
-				System.out.println(" ");
-				System.out.println("El administrador ya existe");
 			}
 			
 		} catch (SQLException e) {
@@ -248,10 +250,38 @@ public class BD {
 			rs=st.executeQuery(sql);
 		
 			while(rs.next()) {
-				System.out.println(" ");
 				System.out.println("Movil: " +rs.getString(1));
 				System.out.println("Marca: " +rs.getString(2));
-				System.out.println("Precio: " +rs.getInt(6));
+				System.out.println("Stock: " +rs.getInt(4));
+				System.out.println("Precio: "+rs.getInt(5)+"€");
+				System.out.println(" ");
+			}
+		
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return control;
+	}
+	
+	public boolean MostrarClientesQueHayanHechoUnaCompra() {
+		boolean control = false;
+		BD.Conectar();
+		Connection con=BD.Conectar();
+		Statement st;
+		ResultSet rs;
+		String sql = "SELECT DISTINCT cliente.nick, cliente.nombre, cliente.apellido FROM cliente INNER JOIN compra ON (cliente.id_cliente = compra.fk_cliente)";
+		
+		try {
+			st=con.createStatement();
+			rs=st.executeQuery(sql);
+		
+			while(rs.next()) {
+				System.out.println(" ____________________________");
+				System.out.println(" | Nick: " +rs.getString(1) +            "|") ;
+				System.out.println(" | Nombre: " +rs.getString(2)             +"|");
+				System.out.println(" | Apellido: " +rs.getString(3)           +"|");
+				System.out.println(" |___________________________"             );
 				System.out.println(" ");
 			}
 		
@@ -576,5 +606,48 @@ public class BD {
 		}
 		return control;
 	}
+	
+	public boolean ModificarStockMovil(String movil, int stock) {
+		boolean control = false;
+		BD.Conectar();
+									
+		String sql = "UPDATE movil SET stock = '"+stock+"' WHERE nombre= '"+movil+"'";
+		
+		try {
+			PreparedStatement pst = BD.Conectar().prepareStatement(sql);
+			int n = pst.executeUpdate();
+			
+			if(n > 0) {
+				control = true;
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return control;
+	}
+	
+	public boolean ModificarPrecioMovil(String movil, int precio) {
+		boolean control = false;
+		BD.Conectar();
+									
+		String sql = "UPDATE movil SET precio_salida = '"+precio+"' WHERE nombre= '"+movil+"'";
+		
+		try {
+			PreparedStatement pst = BD.Conectar().prepareStatement(sql);
+			int n = pst.executeUpdate();
+			
+			if(n > 0) {
+				control = true;
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return control;
+	}
+	
 	
 }

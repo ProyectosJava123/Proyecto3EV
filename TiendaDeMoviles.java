@@ -11,8 +11,7 @@ public class TiendaDeMoviles {
 		ClaseLectura teclado = new ClaseLectura();
 		BD ss = new BD();
 		String opcion;
-		
-		
+
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
