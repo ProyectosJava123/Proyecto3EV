@@ -199,7 +199,7 @@ public class BD {
 		boolean control = false;
 		BD.Conectar();
 		
-		String sql = "INSERT INTO movil (nombre, marca, stock, precio_salida) values ('"+m.getNombre()+"','"+m.getMarca()+"','"+m.getMarca()+"','"+m.getStock()+"','"+m.getPrecio_salida()+"')";
+		String sql = "INSERT INTO movil (nombre, marca, stock, precio_salida) values ('"+m.getNombre()+"','"+m.getMarca()+"','"+m.getStock()+"','"+m.getPrecio_salida()+"')";
 		
 		try {
 			PreparedStatement pst = BD.Conectar().prepareStatement(sql);
@@ -263,6 +263,69 @@ public class BD {
 		}
 		return control;
 	}
+	
+	
+	
+	public boolean MostrarClientesPorMóvil(String nombre, String nick) {
+		boolean control = false;
+		BD.Conectar();
+		Connection con=BD.Conectar();
+		Statement st;
+		ResultSet rs;
+		String sql = "SELECT cliente.nick, cliente.nombre, cliente.apellido, compra.fecha_compra FROM cliente INNER JOIN compra ON (cliente.id_cliente = compra.fk_cliente) INNER JOIN movil ON (movil.id_movil = compra.fk_movil) WHERE movil.nombre='"+nombre+"' and cliente.nick='"+nick+"'";
+		
+		try {
+			st=con.createStatement();
+			rs=st.executeQuery(sql);
+		
+			while(rs.next()) {
+				System.out.println(" ____________________________");
+				System.out.println(" | Cliente: " +rs.getString(1) +"           " +"|") ;
+				System.out.println(" |___________________________|");
+				System.out.println(" | Nombre: " +rs.getString(2)+"           "+"|");
+				System.out.println(" | Apellido: " +rs.getString(3) +"        "+"|");
+				System.out.println(" | Fecha Compra: "+rs.getDate(4)+""+"|" );
+				System.out.println(" |_________________________"+""+"|" );
+				System.out.println(" ");
+			}
+		
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return control;
+	}
+	
+	public boolean MostrarComprasEnUnaFecha(String fecha) {
+		boolean control = false;
+		BD.Conectar();
+		Connection con=BD.Conectar();
+		Statement st;
+		ResultSet rs;
+		java.sql.Date fecha_compra=java.sql.Date.valueOf(fecha);
+		String sql = "SELECT cliente.nick, movil.nombre, compra.precio_compra FROM cliente INNER JOIN compra ON (cliente.id_cliente = compra.fk_cliente) INNER JOIN movil ON (movil.id_movil = compra.fk_movil) WHERE compra.fecha_compra='"+fecha_compra+"'";
+		
+		try {
+			st=con.createStatement();
+			rs=st.executeQuery(sql);
+		
+			while(rs.next()) {
+				System.out.println(" ____________________________");
+				System.out.println(" | Cliente: " +rs.getString(1) +"           " +"|") ;
+				System.out.println(" |___________________________|");
+				System.out.println(" | Móvil: " +rs.getString(2)+"           "+"|");
+				System.out.println(" | Precio_Compra: " +rs.getInt(3) +"        "+"|");
+				System.out.println(" |_________________________"+""+"|" );
+				System.out.println(" ");
+			}
+		
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return control;
+	}
+	
 	
 	public boolean MostrarClientesQueHayanHechoUnaCompra() {
 		boolean control = false;
