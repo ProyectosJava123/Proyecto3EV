@@ -20,6 +20,5 @@ public class Gestion_Usuarios {
 		ss.InsertarCliente((Cliente) c);
 		
 	}
-	
-	
+
 }

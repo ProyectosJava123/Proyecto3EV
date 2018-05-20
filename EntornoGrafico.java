@@ -157,10 +157,17 @@ public class EntornoGrafico {
 		lblNewLabel.setBounds(0, 0, 461, 378);
 		index.add(lblNewLabel);
 		
+		
+		JPanel opcionescliente = new JPanel();
+		opcionescliente.setVisible(false);
+		
+		JPanel opcionesadmin = new JPanel();
+		opcionesadmin.setVisible(false);
+		
 		JPanel consultacomprasporfecha = new JPanel();
-		consultacomprasporfecha.setVisible(false);
 		consultacomprasporfecha.setBounds(0, 0, 463, 377);
 		frame.getContentPane().add(consultacomprasporfecha);
+		consultacomprasporfecha.setVisible(false);
 		consultacomprasporfecha.setLayout(null);
 		
 		JLabel label_31 = new JLabel("Fecha");
@@ -190,8 +197,9 @@ public class EntornoGrafico {
 		JButton button_20 = new JButton("Salir");
 		button_20.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.out.flush();
 				consultacomprasporfecha.setVisible(false);
-				index.setVisible(true);
+				opcionesadmin.setVisible(true);
 			}
 		});
 		
@@ -199,13 +207,17 @@ public class EntornoGrafico {
 		btnNewButton_10.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				BD ss = new BD();
+				System.out.println("COMPRAS POR FECHA");
 				if(fechacompra.getText().isEmpty()){
 					label_33.setText("Campo Vacío");
 				}else if(!ss.MostrarComprasEnUnaFecha(fechacompra.getText())){
-					label_33.setText("Sin Resultados");
+					
+					label_33.setText("");
 				}
 				else{
+					
 					ss.MostrarComprasEnUnaFecha(fechacompra.getText());
+					label_33.setText("");
 				}
 				
 			}
@@ -221,9 +233,9 @@ public class EntornoGrafico {
 		consultacomprasporfecha.add(label_30);
 		
 		JPanel consultamovilesporcliente = new JPanel();
-		consultamovilesporcliente.setVisible(false);
 		consultamovilesporcliente.setBounds(0, 0, 463, 377);
 		frame.getContentPane().add(consultamovilesporcliente);
+		consultamovilesporcliente.setVisible(false);
 		consultamovilesporcliente.setLayout(null);
 		
 		nickcliente_consulta = new JTextField();
@@ -260,6 +272,7 @@ public class EntornoGrafico {
 		btnNewButton_9.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				BD ss = new BD();
+				System.out.println("MOVILES DE UN CLIENTE");
 				if(nickcliente_consulta.getText().isEmpty() || nombremovil_consulta.getText().isEmpty()){
 					label_29.setText("Campos Vacíos");
 				}else if(!ss.ComprobarCliente(nickcliente_consulta.getText())){
@@ -278,6 +291,9 @@ public class EntornoGrafico {
 		JButton button_19 = new JButton("Salir");
 		button_19.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.out.flush();
+				consultamovilesporcliente.setVisible(false);
+				opcionesadmin.setVisible(true);
 			}
 		});
 		button_19.setBounds(263, 265, 105, 56);
@@ -288,17 +304,156 @@ public class EntornoGrafico {
 		lblNewLabel_13.setBounds(0, 0, 463, 377);
 		consultamovilesporcliente.add(lblNewLabel_13);
 		
+		JPanel modificarprecio = new JPanel();
+		modificarprecio.setBounds(0, 0, 463, 377);
+		frame.getContentPane().add(modificarprecio);
+		modificarprecio.setVisible(false);
+		modificarprecio.setLayout(null);
 		
-		JPanel opcionescliente = new JPanel();
-		opcionescliente.setVisible(false);
-		opcionescliente.setBounds(0, 0, 463, 377);
-		frame.getContentPane().add(opcionescliente);
-		opcionescliente.setLayout(null);
+		modmovil_precio = new JTextField();
+		modmovil_precio.setText((String) null);
+		modmovil_precio.setColumns(10);
+		modmovil_precio.setBounds(202, 138, 200, 35);
+		modificarprecio.add(modmovil_precio);
+		
+		JLabel label_23 = new JLabel("Inserta Precio");
+		label_23.setForeground(Color.WHITE);
+		label_23.setFont(new Font("Times New Roman", Font.PLAIN, 26));
+		label_23.setBounds(10, 130, 200, 41);
+		modificarprecio.add(label_23);
+		
+		JLabel label_24 = new JLabel("Inserta M\u00F3vil");
+		label_24.setForeground(Color.WHITE);
+		label_24.setFont(new Font("Times New Roman", Font.PLAIN, 26));
+		label_24.setBounds(10, 63, 200, 41);
+		modificarprecio.add(label_24);
+		
+		modmovil_nombre2 = new JTextField();
+		modmovil_nombre2.setText((String) null);
+		modmovil_nombre2.setColumns(10);
+		modmovil_nombre2.setBounds(202, 71, 200, 35);
+		modificarprecio.add(modmovil_nombre2);
+		
+		JLabel label_26 = new JLabel("");
+		label_26.setForeground(Color.WHITE);
+		label_26.setFont(new Font("Times New Roman", Font.PLAIN, 26));
+		label_26.setBounds(107, 11, 200, 41);
+		modificarprecio.add(label_26);
+		
+		JButton button_15 = new JButton("Insertar");
+		button_15.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BD ss = new BD();
+				
+				if(modmovil_nombre2.getText().isEmpty() || modmovil_precio.getText().isEmpty()){
+					label_26.setText("Campos Vacíos");
+				}else if(!ss.ComprobarMovil(modmovil_nombre2.getText())){
+					label_26.setText("El móvil no existe");
+				}else {
+					int precio = Integer.parseInt(modmovil_precio.getText());
+					ss.ModificarPrecioMovil(modmovil_nombre2.getText(), precio);
+					label_26.setText("");
+				}
+				
+			}
+		});
+		button_15.setFont(new Font("Stencil", Font.PLAIN, 17));
+		button_15.setBounds(28, 233, 129, 71);
+		modificarprecio.add(button_15);
+		
+		JButton button_16 = new JButton("Salir");
+		button_16.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				modificarprecio.setVisible(false);
+				opcionesadmin.setVisible(true);
+			}
+		});
+		button_16.setFont(new Font("Stencil", Font.PLAIN, 17));
+		button_16.setBounds(216, 233, 129, 71);
+		modificarprecio.add(button_16);
+		
+		JLabel label_25 = new JLabel("Fondo");
+		label_25.setIcon(new ImageIcon("C:\\Users\\Leon\\Pictures\\sunset_and_space_by_qauz-d6hwooq.jpg"));
+		label_25.setBounds(0, 0, 463, 377);
+		modificarprecio.add(label_25);
+		
+		JPanel modificarstock = new JPanel();
+		modificarstock.setBounds(0, 0, 463, 377);
+		frame.getContentPane().add(modificarstock);
+		modificarstock.setVisible(false);
+		modificarstock.setLayout(null);
+		
+		modstockmovil_stock = new JTextField();
+		modstockmovil_stock.setText((String) null);
+		modstockmovil_stock.setColumns(10);
+		modstockmovil_stock.setBounds(202, 138, 200, 35);
+		modificarstock.add(modstockmovil_stock);
+		
+		JLabel label_20 = new JLabel("Inserta Stock");
+		label_20.setForeground(Color.WHITE);
+		label_20.setFont(new Font("Times New Roman", Font.PLAIN, 26));
+		label_20.setBounds(10, 130, 200, 41);
+		modificarstock.add(label_20);
+		
+		JLabel label_21 = new JLabel("Inserta Móvil");
+		label_21.setForeground(Color.WHITE);
+		label_21.setFont(new Font("Times New Roman", Font.PLAIN, 26));
+		label_21.setBounds(10, 63, 200, 41);
+		modificarstock.add(label_21);
+		
+		modstockmovil_nombre = new JTextField();
+		modstockmovil_nombre.setText((String) null);
+		modstockmovil_nombre.setColumns(10);
+		modstockmovil_nombre.setBounds(202, 71, 200, 35);
+		modificarstock.add(modstockmovil_nombre);
+		
+		JLabel label_22 = new JLabel("");
+		label_22.setForeground(Color.WHITE);
+		label_22.setFont(new Font("Times New Roman", Font.PLAIN, 26));
+		label_22.setBounds(107, 11, 200, 41);
+		modificarstock.add(label_22);
+		
+		JButton button_14 = new JButton("Salir");
+		button_14.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				modificarstock.setVisible(false);
+				opcionesadmin.setVisible(true);
+			}
+		});
+		
+		JButton button_3 = new JButton("Insertar");
+		button_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BD ss = new BD();
+				
+				if(modstockmovil_nombre.getText().isEmpty() || modstockmovil_stock.getText().isEmpty()){
+					label_20.setText("Campos Vacíos");
+				}else if(!ss.ComprobarMovil(modstockmovil_nombre.getText())){
+					label_20.setText("El móvil no existe");
+				}else{
+					int stock = Integer.parseInt(modstockmovil_stock.getText());
+					ss.ModificarStockMovil(modstockmovil_nombre.getText(), stock);
+					label_20.setText("");
+				}
+				
+			}
+		});
+		button_3.setFont(new Font("Stencil", Font.PLAIN, 17));
+		button_3.setBounds(28, 233, 129, 71);
+		modificarstock.add(button_3);
+		button_14.setFont(new Font("Stencil", Font.PLAIN, 17));
+		button_14.setBounds(216, 233, 129, 71);
+		modificarstock.add(button_14);
+		
+		JLabel lblNewLabel_12 = new JLabel("Fondo");
+		lblNewLabel_12.setIcon(new ImageIcon("C:\\Users\\Leon\\Pictures\\sunset_and_space_by_qauz-d6hwooq.jpg"));
+		lblNewLabel_12.setBounds(0, 0, 463, 377);
+		modificarstock.add(lblNewLabel_12);
 		
 		JPanel nuevomovil = new JPanel();
-		nuevomovil.setVisible(false);
 		nuevomovil.setBounds(0, 0, 463, 377);
 		frame.getContentPane().add(nuevomovil);
+		nuevomovil.setVisible(false);
 		nuevomovil.setLayout(null);
 		
 		JLabel label_15 = new JLabel("Nombre");
@@ -359,7 +514,7 @@ public class EntornoGrafico {
 		button_13.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				nuevomovil.setVisible(false);
-				index.setVisible(true);
+				opcionesadmin.setVisible(true);
 			}
 		});
 		
@@ -390,158 +545,6 @@ public class EntornoGrafico {
 		lblNewLabel_11.setBounds(0, 0, 463, 377);
 		nuevomovil.add(lblNewLabel_11);
 		lblNewLabel_11.setIcon(new ImageIcon("C:\\Users\\Leon\\Pictures\\sunset_and_space_by_qauz-d6hwooq.jpg"));
-		
-		JPanel modificarprecio = new JPanel();
-		modificarprecio.setVisible(false);
-		modificarprecio.setLayout(null);
-		modificarprecio.setBounds(0, 0, 463, 377);
-		frame.getContentPane().add(modificarprecio);
-		
-		modmovil_precio = new JTextField();
-		modmovil_precio.setText((String) null);
-		modmovil_precio.setColumns(10);
-		modmovil_precio.setBounds(202, 138, 200, 35);
-		modificarprecio.add(modmovil_precio);
-		
-		JLabel label_23 = new JLabel("Inserta Precio");
-		label_23.setForeground(Color.WHITE);
-		label_23.setFont(new Font("Times New Roman", Font.PLAIN, 26));
-		label_23.setBounds(10, 130, 200, 41);
-		modificarprecio.add(label_23);
-		
-		JLabel label_24 = new JLabel("Inserta M\u00F3vil");
-		label_24.setForeground(Color.WHITE);
-		label_24.setFont(new Font("Times New Roman", Font.PLAIN, 26));
-		label_24.setBounds(10, 63, 200, 41);
-		modificarprecio.add(label_24);
-		
-		modmovil_nombre2 = new JTextField();
-		modmovil_nombre2.setText((String) null);
-		modmovil_nombre2.setColumns(10);
-		modmovil_nombre2.setBounds(202, 71, 200, 35);
-		modificarprecio.add(modmovil_nombre2);
-		
-		JLabel label_26 = new JLabel("");
-		label_26.setForeground(Color.WHITE);
-		label_26.setFont(new Font("Times New Roman", Font.PLAIN, 26));
-		label_26.setBounds(107, 11, 200, 41);
-		modificarprecio.add(label_26);
-		
-		JButton button_15 = new JButton("Insertar");
-		button_15.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				BD ss = new BD();
-				
-				if(modmovil_nombre2.getText().isEmpty() || modmovil_precio.getText().isEmpty()){
-					label_26.setText("Campos Vacíos");
-				}else if(!ss.ComprobarMovil(modmovil_nombre2.getText())){
-					label_26.setText("El móvil no existe");
-				}else {
-					int precio = Integer.parseInt(modmovil_precio.getText());
-					ss.ModificarPrecioMovil(modmovil_nombre2.getText(), precio);
-					label_26.setText("");
-				}
-				
-			}
-		});
-		button_15.setFont(new Font("Stencil", Font.PLAIN, 17));
-		button_15.setBounds(28, 233, 129, 71);
-		modificarprecio.add(button_15);
-		
-		JButton button_16 = new JButton("Salir");
-		button_16.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				modificarprecio.setVisible(false);
-				index.setVisible(true);
-			}
-		});
-		button_16.setFont(new Font("Stencil", Font.PLAIN, 17));
-		button_16.setBounds(216, 233, 129, 71);
-		modificarprecio.add(button_16);
-		
-		JLabel label_25 = new JLabel("Fondo");
-		label_25.setIcon(new ImageIcon("C:\\Users\\Leon\\Pictures\\sunset_and_space_by_qauz-d6hwooq.jpg"));
-		label_25.setBounds(0, 0, 463, 377);
-		modificarprecio.add(label_25);
-		
-		JPanel modificarstock = new JPanel();
-		modificarstock.setVisible(false);
-		modificarstock.setBounds(0, 0, 463, 377);
-		frame.getContentPane().add(modificarstock);
-		modificarstock.setLayout(null);
-		
-		modstockmovil_stock = new JTextField();
-		modstockmovil_stock.setText((String) null);
-		modstockmovil_stock.setColumns(10);
-		modstockmovil_stock.setBounds(202, 138, 200, 35);
-		modificarstock.add(modstockmovil_stock);
-		
-		JLabel label_20 = new JLabel("Inserta Stock");
-		label_20.setForeground(Color.WHITE);
-		label_20.setFont(new Font("Times New Roman", Font.PLAIN, 26));
-		label_20.setBounds(10, 130, 200, 41);
-		modificarstock.add(label_20);
-		
-		JLabel label_21 = new JLabel("Inserta Móvil");
-		label_21.setForeground(Color.WHITE);
-		label_21.setFont(new Font("Times New Roman", Font.PLAIN, 26));
-		label_21.setBounds(10, 63, 200, 41);
-		modificarstock.add(label_21);
-		
-		modstockmovil_nombre = new JTextField();
-		modstockmovil_nombre.setText((String) null);
-		modstockmovil_nombre.setColumns(10);
-		modstockmovil_nombre.setBounds(202, 71, 200, 35);
-		modificarstock.add(modstockmovil_nombre);
-		
-		JLabel label_22 = new JLabel("");
-		label_22.setForeground(Color.WHITE);
-		label_22.setFont(new Font("Times New Roman", Font.PLAIN, 26));
-		label_22.setBounds(107, 11, 200, 41);
-		modificarstock.add(label_22);
-		
-		JButton button_14 = new JButton("Salir");
-		button_14.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				modificarstock.setVisible(false);
-				index.setVisible(true);
-			}
-		});
-		
-		JButton button_3 = new JButton("Insertar");
-		button_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				BD ss = new BD();
-				
-				if(modstockmovil_nombre.getText().isEmpty() || modstockmovil_stock.getText().isEmpty()){
-					label_20.setText("Campos Vacíos");
-				}else if(!ss.ComprobarMovil(modstockmovil_nombre.getText())){
-					label_20.setText("El móvil no existe");
-				}else{
-					int stock = Integer.parseInt(modstockmovil_stock.getText());
-					ss.ModificarStockMovil(modstockmovil_nombre.getText(), stock);
-					label_20.setText("");
-				}
-				
-			}
-		});
-		button_3.setFont(new Font("Stencil", Font.PLAIN, 17));
-		button_3.setBounds(28, 233, 129, 71);
-		modificarstock.add(button_3);
-		button_14.setFont(new Font("Stencil", Font.PLAIN, 17));
-		button_14.setBounds(216, 233, 129, 71);
-		modificarstock.add(button_14);
-		
-		JLabel lblNewLabel_12 = new JLabel("Fondo");
-		lblNewLabel_12.setIcon(new ImageIcon("C:\\Users\\Leon\\Pictures\\sunset_and_space_by_qauz-d6hwooq.jpg"));
-		lblNewLabel_12.setBounds(0, 0, 463, 377);
-		modificarstock.add(lblNewLabel_12);
-		
-		JPanel listamoviles = new JPanel();
-		listamoviles.setBounds(0, 0, 463, 377);
-		
-		JPanel opcionesadmin = new JPanel();
-		opcionesadmin.setVisible(false);
 		opcionesadmin.setBounds(0, 0, 463, 377);
 		frame.getContentPane().add(opcionesadmin);
 		opcionesadmin.setLayout(null);
@@ -550,6 +553,7 @@ public class EntornoGrafico {
 		btnNewButton_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				BD ss = new BD();
+				System.out.println("CLIENTES QUE HAN HECHO UNA COMPRA");
 				ss.MostrarClientesQueHayanHechoUnaCompra();
 			}
 		});
@@ -605,7 +609,7 @@ public class EntornoGrafico {
 				consultamovilesporcliente.setVisible(true);
 			}
 		});
-		button_6.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 10));
+		button_6.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 15));
 		button_6.setBounds(10, 11, 212, 59);
 		opcionesadmin.add(button_6);
 		
@@ -619,7 +623,7 @@ public class EntornoGrafico {
 		button_12.setBorder(null);
 		button_12.setAlignmentX(Component.CENTER_ALIGNMENT);
 		button_12.setHorizontalTextPosition(SwingConstants.CENTER);
-		button_12.setFont(new Font("Times New Roman", Font.PLAIN, 9));
+		button_12.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		button_12.setBounds(249, 11, 204, 59);
 		opcionesadmin.add(button_12);
 		
@@ -638,6 +642,12 @@ public class EntornoGrafico {
 		label_4.setBounds(0, 0, 463, 377);
 		opcionesadmin.add(label_4);
 		label_4.setIcon(new ImageIcon("C:\\Users\\Leon\\Pictures\\sunset_and_space_by_qauz-d6hwooq.jpg"));
+		opcionescliente.setBounds(0, 0, 463, 377);
+		frame.getContentPane().add(opcionescliente);
+		opcionescliente.setLayout(null);
+		
+		JPanel listamoviles = new JPanel();
+		listamoviles.setBounds(0, 0, 463, 377);
 		
 		JPanel compramoviles = new JPanel();
 		compramoviles.setBounds(0, 0, 463, 377);
@@ -1145,11 +1155,11 @@ public class EntornoGrafico {
 				}else {gu.Pedir_Cliente(c_nick.getText(), c_password.getText(), c_nombre.getText(), c_apellido.getText(), c_telefono.getText(), c_correo.getText());
 					registrocliente.setVisible(false);
 					index.setVisible(true);
+					
 				}
 			}
 		});
 		
-	
 		registrocliente.add(mensajes);
 		btnNewButton_1.setBounds(37, 313, 163, 41);
 		registrocliente.add(btnNewButton_1);

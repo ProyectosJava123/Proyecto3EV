@@ -314,7 +314,7 @@ public class BD {
 				System.out.println(" | Cliente: " +rs.getString(1) +"           " +"|") ;
 				System.out.println(" |___________________________|");
 				System.out.println(" | Móvil: " +rs.getString(2)+"           "+"|");
-				System.out.println(" | Precio_Compra: " +rs.getInt(3) +"        "+"|");
+				System.out.println(" | Precio_Compra: " +rs.getInt(3)+"€" +"        "+"|");
 				System.out.println(" |_________________________"+""+"|" );
 				System.out.println(" ");
 			}
@@ -340,6 +340,7 @@ public class BD {
 			rs=st.executeQuery(sql);
 		
 			while(rs.next()) {
+				System.out.println("");
 				System.out.println(" ____________________________");
 				System.out.println(" | Nick: " +rs.getString(1) +            "|") ;
 				System.out.println(" | Nombre: " +rs.getString(2)             +"|");
@@ -416,30 +417,6 @@ public class BD {
 			
 			while(rs.next()) {
 				control=true;
-			}
-			
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		}
-		return control;
-	}
-	
-	public boolean ListadoAdministradores() {
-		boolean control = false;
-		BD.Conectar();
-		Connection con=BD.Conectar();
-		Statement st;
-		ResultSet rs;
-		String sql = "SELECT * FROM administrador";
-		
-		try {
-			st=con.createStatement();
-			rs=st.executeQuery(sql);
-			
-			while(rs.next()) {
-				System.out.println("Administradores");
-				System.out.println(rs.getString(1));
 			}
 			
 		} catch (SQLException e) {
