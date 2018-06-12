@@ -62,7 +62,6 @@ public class BD {
 				PreparedStatement pst = BD.Conectar().prepareStatement(sql);
 				PreparedStatement pst5 = BD.Conectar().prepareStatement(sql4);
 				
-		
 				int n = pst.executeUpdate();
 				int x = pst5.executeUpdate();
 			
@@ -70,6 +69,39 @@ public class BD {
 					control = true;
 				}
 				
+			}
+		
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return control;
+	}
+	
+	public boolean InsertarFkAdmin(String nick, String movil) {
+		boolean control = false;
+		BD.Conectar();
+										
+		String sql1 = "SELECT * FROM administrador WHERE administrador.nick = '"+nick+"'";
+		try {
+			
+			PreparedStatement pst2 = BD.Conectar().prepareStatement(sql1);
+			
+			ResultSet rsadmin = pst2.executeQuery();
+			
+			if(rsadmin.next()){
+				
+				int fk_administrador = rsadmin.getInt("id_administrador");
+				
+				String sql = "UPDATE movil SET fk_administrador = "+fk_administrador+" WHERE movil.nombre= '"+movil+"'";
+		
+				PreparedStatement pst = BD.Conectar().prepareStatement(sql);
+				
+				int n = pst.executeUpdate();
+			
+				if(n > 0) {
+					control = true;
+				}	
 			}
 		
 		} catch (SQLException e) {
@@ -199,7 +231,7 @@ public class BD {
 		boolean control = false;
 		BD.Conectar();
 		
-		String sql = "INSERT INTO movil (nombre, marca, stock, precio_salida) values ('"+m.getNombre()+"','"+m.getMarca()+"','"+m.getStock()+"','"+m.getPrecio_salida()+"')";
+		String sql = "INSERT INTO movil (nombre, marca, stock, precio_salida, precio_compra) values ('"+m.getNombre()+"','"+m.getMarca()+"','"+m.getStock()+"','"+m.getPrecio_salida()+"','"+m.getPrecio_compra()+"')";
 		
 		try {
 			PreparedStatement pst = BD.Conectar().prepareStatement(sql);
@@ -252,8 +284,35 @@ public class BD {
 			while(rs.next()) {
 				System.out.println("Movil: " +rs.getString(1));
 				System.out.println("Marca: " +rs.getString(2));
+				System.out.println("Precio Venta: "+rs.getInt(5)+"€");
+				System.out.println(" ");
+			}
+		
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return control;
+	}
+	
+	public boolean ListadoMoviles2() {
+		boolean control = false;
+		BD.Conectar();
+		Connection con=BD.Conectar();
+		Statement st;
+		ResultSet rs;
+		String sql = "SELECT * FROM movil";
+		
+		try {
+			st=con.createStatement();
+			rs=st.executeQuery(sql);
+		
+			while(rs.next()) {
+				System.out.println("Movil: " +rs.getString(1));
+				System.out.println("Marca: " +rs.getString(2));
 				System.out.println("Stock: " +rs.getInt(4));
-				System.out.println("Precio: "+rs.getInt(5)+"€");
+				System.out.println("Precio Venta: "+rs.getInt(5)+"€");
+				System.out.println("Precio Compra: "+rs.getInt(7)+"€");
 				System.out.println(" ");
 			}
 		
@@ -266,13 +325,13 @@ public class BD {
 	
 	
 	
-	public boolean MostrarClientesPorMóvil(String nombre, String nick) {
+	public boolean MostrarClientesPorMóvil(String nick) {
 		boolean control = false;
 		BD.Conectar();
 		Connection con=BD.Conectar();
 		Statement st;
 		ResultSet rs;
-		String sql = "SELECT cliente.nick, cliente.nombre, cliente.apellido, compra.fecha_compra FROM cliente INNER JOIN compra ON (cliente.id_cliente = compra.fk_cliente) INNER JOIN movil ON (movil.id_movil = compra.fk_movil) WHERE movil.nombre='"+nombre+"' and cliente.nick='"+nick+"'";
+		String sql = "SELECT cliente.nick, cliente.nombre, cliente.apellido, movil.nombre, compra.fecha_compra FROM cliente INNER JOIN compra ON (cliente.id_cliente = compra.fk_cliente) INNER JOIN movil ON (movil.id_movil = compra.fk_movil) WHERE cliente.nick='"+nick+"'";
 		
 		try {
 			st=con.createStatement();
@@ -284,7 +343,8 @@ public class BD {
 				System.out.println(" |___________________________|");
 				System.out.println(" | Nombre: " +rs.getString(2)+"           "+"|");
 				System.out.println(" | Apellido: " +rs.getString(3) +"        "+"|");
-				System.out.println(" | Fecha Compra: "+rs.getDate(4)+""+"|" );
+				System.out.println(" | Móvil: " +rs.getString(4) +"        "+"|");
+				System.out.println(" | Fecha Compra: "+rs.getDate(5)+""+"|" );
 				System.out.println(" |_________________________"+""+"|" );
 				System.out.println(" ");
 			}
@@ -403,13 +463,13 @@ public class BD {
 		return control;
 	}
 	
-	public boolean ValidarCliente(String nick, String password, String correo) {
+	public boolean ValidarCliente(String nick, String password) {
 		boolean control = false;
 		BD.Conectar();
 		Connection con=BD.Conectar();
 		Statement st;
 		ResultSet rs;
-		String sql = "SELECT * FROM cliente WHERE nick = '"+nick+"' AND password ='"+password+"' AND correo='"+correo+"'";
+		String sql = "SELECT * FROM cliente WHERE nick = '"+nick+"' AND password ='"+password+"'";
 		
 		try {
 			st=con.createStatement();

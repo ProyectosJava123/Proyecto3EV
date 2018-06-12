@@ -5,8 +5,7 @@ public class Movil {
 	protected String marca;
 	protected int stock;
 	protected int precio_salida;
-	protected int proveedor;
-
+	protected int precio_compra;
 	
 	public Movil(String nombre, String marca, int stock, int precio_salida) {
 		this.nombre=nombre;
@@ -15,6 +14,22 @@ public class Movil {
 		this.precio_salida=precio_salida;
 	}
 	
+	public Movil(String nombre, String marca, int stock, int precio_salida, int precio_compra) {
+		this.nombre=nombre;
+		this.marca=marca;
+		this.stock=stock;
+		this.precio_salida=precio_salida;
+		this.precio_compra=precio_compra;
+	}
+	
+	protected int getPrecio_compra() {
+		return precio_compra;
+	}
+
+	protected void setPrecio_compra(int precio_compra) {
+		this.precio_compra = precio_compra;
+	}
+
 	public Movil(String nombre, String marca, int precio_salida) {
 		this.nombre=nombre;
 		this.marca=marca;
@@ -23,14 +38,6 @@ public class Movil {
 	
 	public Movil(String nombre) {
 		this.nombre=nombre;
-	}
-
-	protected int getProveedor() {
-		return proveedor;
-	}
-
-	protected void setProveedor(int proveedor) {
-		this.proveedor = proveedor;
 	}
 
 	protected String getNombre() {
